@@ -1,0 +1,13 @@
+#tfr-settings { margin: 12px 0; padding: 14px; border: 1px solid var(--SmartThemeBorderColor, #5555); border-radius: 12px; min-width: 0; }
+#tfr-settings h4 { margin: 0 0 12px; font: inherit; font-weight: 600; }
+#tfr-settings .tfr-status { margin: 10px 0; font-size: .9em; opacity: .8; overflow-wrap: anywhere; }
+#tfr-settings .tfr-status[data-warning="true"] { color: #d99664; opacity: 1; }
+#tfr-settings .tfr-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+#tfr-settings button { display: inline-flex; align-items: center; justify-content: center; flex: 0 1 auto; width: auto; height: auto; max-width: 100%; margin: 0; padding: 9px 12px; border: 1px solid var(--cu-border, var(--SmartThemeBorderColor, #8886)); background: var(--cu-hover, #8882); color: inherit; font: inherit; line-height: 1.4; border-radius: 9px; min-height: 36px; cursor: pointer; }
+#tfr-settings button:hover { background: var(--cu-selected, #8884); }
+#tfr-settings button:disabled { opacity: .5; cursor: default; }
+#tfr-settings label { display: flex; align-items: center; gap: 8px; margin: 9px 0; }
+#tfr-settings .tfr-version { justify-content: space-between; flex-wrap: wrap; }
+#tfr-settings .tfr-version input { width: 130px; max-width: 100%; margin: 0; }
+#tfr-settings .tfr-note { font-size: .85em; opacity: .65; line-height: 1.5; margin: 8px 0 0; }
+#tfr-settings .tfr-clear { color: #cb8179; }

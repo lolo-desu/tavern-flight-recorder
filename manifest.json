@@ -1,0 +1,11 @@
+{
+  "display_name": "Tavern Flight Recorder · 轻量诊断",
+  "loading_order": -1000,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "milo",
+  "version": "0.1.0",
+  "homePage": "https://github.com/lolo-desu/tavern-flight-recorder"
+}
