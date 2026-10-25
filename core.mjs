@@ -1,4 +1,4 @@
-export const VERSION = '0.1.1';
+export const VERSION = '0.1.2';
 export const PREFIX = 'tt-flight-recorder:v1:';
 export const LIMITS = Object.freeze({ sessions: 6, events: 240, chars: 24000 });
 const RECORD_PREFIX = `${PREFIX}session:`;
@@ -59,7 +59,9 @@ export function safeEnvironment(input = {}) {
 export function cleanSession(value) {
     if (!value || value.schema !== 1 || !validId(value.id) || !validId(value.stream) || !numeric(value.startedAt) || !numeric(value.lastSeenAt)) return null;
     return {
-        schema: 1, recorderVersion: VERSION, id: value.id, stream: value.stream,
+        // Older exporters relabelled historical sessions with the exporter
+        // version. The environment retains the version that captured them.
+        schema: 1, recorderVersion: versionText(value.environment?.recorderVersion) || versionText(value.recorderVersion) || 'unknown', id: value.id, stream: value.stream,
         startedAt: value.startedAt, lastSeenAt: value.lastSeenAt, closed: value.closed === true,
         environment: safeEnvironment(value.environment),
         events: (Array.isArray(value.events) ? value.events : []).slice(-LIMITS.events)

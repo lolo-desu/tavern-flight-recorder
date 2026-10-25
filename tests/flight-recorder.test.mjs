@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Recorder, PREFIX, LIMITS, safeData, safeEnvironment } from '../core.mjs';
+import { Recorder, PREFIX, LIMITS, safeData, safeEnvironment, cleanSession } from '../core.mjs';
 
 class Storage {
     data = new Map(); fail = false; writes = 0;
@@ -119,4 +119,15 @@ test('pause, disabled startup, corrupt storage and explicit clear remain contain
 test('the frozen UA OS token is separate from the user-provided OS version', () => {
     assert.deepEqual(safeEnvironment({ osVersion: '', uaOSVersion: '18.7' }), { uaOSVersion: '18.7' });
     assert.deepEqual(safeEnvironment({ osVersion: '27.0', uaOSVersion: '18.7' }), { osVersion: '27.0', uaOSVersion: '18.7' });
+});
+
+test('export preserves historical collection version and event values without mutating storage', () => {
+    const original = { schema: 1, recorderVersion: '0.1.1', id: 'historical-session-0001', stream: 'historical-stream-0001', startedAt: 1000, lastSeenAt: 2000, closed: false, environment: { recorderVersion: '0.1.0', platform: 'ios', osVersion: '18.7' }, events: [{ at: 2000, kind: 'sample', data: { iframes: 5, parkedIframes: 2 } }] };
+    const before = JSON.stringify(original);
+    const clean = cleanSession(original);
+    assert.equal(clean.recorderVersion, '0.1.0');
+    assert.deepEqual(clean.events, original.events);
+    assert.equal(JSON.stringify(original), before);
+    delete original.environment.recorderVersion;
+    assert.equal(cleanSession(original).recorderVersion, '0.1.1');
 });

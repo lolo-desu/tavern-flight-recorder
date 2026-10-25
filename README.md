@@ -1,4 +1,4 @@
-# Tavern Flight Recorder 0.1.1
+# Tavern Flight Recorder 0.1.2
 
 独立的 SillyTavern / TauriTavern 轻量诊断扩展，用于调查高负载时整页重载。无需 Claude Surface，无外部依赖，无远程上传。
 
@@ -31,6 +31,10 @@ https://github.com/lolo-desu/tavern-flight-recorder
 ### 0.1.1 诊断字段修正
 
 `osVersion` 仅保存用户在设置中填写的真实 iOS 版本。自动解析的兼容标识单独放在 `uaOSVersion`；WebKit 会冻结 User-Agent 中的 OS 版本，因此自动出现的 18.7 不能用来判定真实系统版本。另修正不支持长任务指标时仍输出零值的问题：现在会省略这些指标，避免被解读为“没有卡顿”。既有 0.1.0 会话按原样保留，分析旧日志时需要注意这个区别。
+
+### 0.1.2 历史版本标注修正
+
+导出旧会话时保留采集它的记录器版本，不再标成当前导出器版本；以会话 environment 中保存的原始版本为准。此修正不改动旧事件的时间、类型或测量数据，不增加采集范围，也不是宿主重载问题的修复。
 
 ## 边界与隐私
 
