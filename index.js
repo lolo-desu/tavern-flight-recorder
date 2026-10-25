@@ -30,7 +30,10 @@ function initialize() {
         storage, makeId, stream,
         environment: {
             recorderVersion: VERSION, platform,
-            osVersion: config.osVersion || (ios ? ua.match(/OS ([\d_]+)/)?.[1]?.replaceAll('_', '.') : ''),
+            // WebKit freezes the OS token for compatibility. It is not the real
+            // iOS release; only an explicitly entered version is authoritative.
+            osVersion: config.osVersion,
+            uaOSVersion: ios ? ua.match(/OS ([\d_]+)/)?.[1]?.replaceAll('_', '.') : '',
             webKitVersion: ua.match(/AppleWebKit\/([\d.]+)/)?.[1],
             chromiumVersion: ua.match(/(?:Chrome|CriOS)\/([\d.]+)/)?.[1],
             nativeVersion: config.nativeVersion,
@@ -90,7 +93,7 @@ function initialize() {
         };
     }
     function sample(extra = {}) {
-        recorder.record('sample', { ...collect(), events: counters, ...taskStats, suppressedErrors, ...extra });
+        recorder.record('sample', { ...collect(), events: counters, ...(longTaskSupported ? taskStats : {}), suppressedErrors, ...extra });
         counters = {}; taskStats = { longTasks: 0, longTaskTotalMs: 0, maxLongTaskMs: 0 };
         errorBudget = 8; suppressedErrors = 0;
     }

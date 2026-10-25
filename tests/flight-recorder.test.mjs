@@ -115,3 +115,8 @@ test('pause, disabled startup, corrupt storage and explicit clear remain contain
     assert.equal(unavailable.export().storage.persistent, false);
     assert.equal(unavailable.export().sessions.length, 1);
 });
+
+test('the frozen UA OS token is separate from the user-provided OS version', () => {
+    assert.deepEqual(safeEnvironment({ osVersion: '', uaOSVersion: '18.7' }), { uaOSVersion: '18.7' });
+    assert.deepEqual(safeEnvironment({ osVersion: '27.0', uaOSVersion: '18.7' }), { osVersion: '27.0', uaOSVersion: '18.7' });
+});

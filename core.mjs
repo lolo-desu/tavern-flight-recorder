@@ -1,4 +1,4 @@
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.1';
 export const PREFIX = 'tt-flight-recorder:v1:';
 export const LIMITS = Object.freeze({ sessions: 6, events: 240, chars: 24000 });
 const RECORD_PREFIX = `${PREFIX}session:`;
@@ -41,7 +41,7 @@ export function safeData(input = {}) {
 export function safeEnvironment(input = {}) {
     const result = {};
     if (!input || typeof input !== 'object') return result;
-    for (const key of ['osVersion', 'webKitVersion', 'chromiumVersion', 'nativeVersion', 'recorderVersion']) {
+    for (const key of ['osVersion', 'uaOSVersion', 'webKitVersion', 'chromiumVersion', 'nativeVersion', 'recorderVersion']) {
         const value = versionText(input[key]);
         if (value) result[key] = value;
     }

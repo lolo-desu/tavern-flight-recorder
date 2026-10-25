@@ -1,4 +1,4 @@
-# Tavern Flight Recorder 0.1.0
+# Tavern Flight Recorder 0.1.1
 
 独立的 SillyTavern / TauriTavern 轻量诊断扩展，用于调查高负载时整页重载。无需 Claude Surface，无外部依赖，无远程上传。
 
@@ -27,6 +27,10 @@ https://github.com/lolo-desu/tavern-flight-recorder
 - 顶层页面中的消息、iframe、停车 iframe、canvas、video 数量和视口尺寸。不会访问 iframe 内部页面。
 - 主页面错误类型、来源类别、行列号和错误指纹。错误原文和堆栈不会保存；错误风暴受限流保护。
 - 系统与引擎版本、屏幕尺寸；若浏览器支持，则记录 JS 堆和长任务汇总。**iOS 通常不提供 JS 堆/长任务指标，缺失不代表内存使用为零。**
+
+### 0.1.1 诊断字段修正
+
+`osVersion` 仅保存用户在设置中填写的真实 iOS 版本。自动解析的兼容标识单独放在 `uaOSVersion`；WebKit 会冻结 User-Agent 中的 OS 版本，因此自动出现的 18.7 不能用来判定真实系统版本。另修正不支持长任务指标时仍输出零值的问题：现在会省略这些指标，避免被解读为“没有卡顿”。既有 0.1.0 会话按原样保留，分析旧日志时需要注意这个区别。
 
 ## 边界与隐私
 
